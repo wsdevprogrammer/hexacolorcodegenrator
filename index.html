@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Free Hexa Color Code Genrator</title>
+        <link rel="shortcut icon" href="https://htmlcolorcodes.com/assets/images/favicon.png" type="image/x-icon">
+        <style>
+            body {
+                width: 100%;
+                height: 100%;
+                font-size: 1.2rem;
+                font-family: Impact, Haettenschweiler, 'Arial Narrow Bold',
+                    sans-serif;
+            }
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            #header {
+                margin: 50px 0px 20px 0px;
+            }
+            .main-container {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+            #colorBox {
+                width: 400px;
+                height: 500px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+                border-radius: 10px;
+                background-color: blueviolet;
+            }
+            #colorCode {
+                color: white;
+                font-weight: bold;
+            }
+            #changeColorButton,
+            #copyColor,
+            #resetColor {
+                margin: 10px 2px;
+                padding: 15px;
+                border: none;
+                color: white;
+                box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+                border-radius: 4px;
+                font-size: 1rem;
+                font-weight: 300;
+            }
+            #changeColorButton {
+                background-color: green;
+            }
+            #copyColor {
+                background-color: orange;
+            }
+            #resetColor {
+                background-color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main-container">
+            <h1 id="header">Color Genrator - Let's Genrate Color For you</h1>
+            <div class="inner-container">
+                <div id="colorBox">
+                    <span id="colorCode"></span>
+                </div>
+                <button id="changeColorButton">Genrate Color</button>
+                <button id="copyColor">Copy Color</button>
+                <button id="resetColor">Reset</button>
+            </div>
+        </div>
+
+        <script>
+            let resetButton = document.getElementById('resetColor')
+            let colorBox = document.getElementById('colorBox')
+            let copyColorBtn = document.getElementById('copyColor')
+            let header = document.getElementById('header')
+            let colorCode = document.getElementById('colorCode')
+
+            function changeHeaerColor() {
+                let newColor = getRandomColor()
+                colorBox.style.backgroundColor = newColor
+                copyColorBtn.style.backgroundColor = newColor
+                colorCode.style.fontSize = '2rem'
+                colorCode.innerText = newColor
+                resetButton.onclick = resetColorToDefault
+            }
+            function getRandomColor() {
+                let letters = '0123456789ABCDEF'
+                let color = '#'
+                for (i = 0; i < 6; i++) {
+                    // color = color + letters[Math.floor(Math.random()*16)];
+                    color = color + letters[Math.floor(Math.random() * 16)]
+                }
+                return color
+            }
+            document.getElementById('changeColorButton').onclick =
+                changeHeaerColor
+
+            function resetColorToDefault() {
+                colorBox.style.backgroundColor = ''
+                copyColorBtn.style.backgroundColor = 'orange'
+                colorCode.innerText = ''
+            }
+
+            function copyToClipboard() {
+                // Create a new textarea element and set its value to the color code.
+                let tempElement = document.createElement('textarea')
+                let tempElementValue = (tempElement.value =
+                    document.getElementById('colorCode').innerText)
+
+                if (tempElementValue) {
+                    document.body.appendChild(tempElement)
+                    tempElement.select()
+                    document.execCommand('copy')
+                    document.body.removeChild(tempElement)
+                    alert('Color copied to clipboard: ' + tempElement.value)
+                } else {
+                    alert('First Genrate the Color Code')
+                }
+            }
+
+            document.getElementById('colorCode').onclick = copyToClipboard
+            document.getElementById('copyColor').onclick = copyToClipboard
+        </script>
+    </body>
+</html>
